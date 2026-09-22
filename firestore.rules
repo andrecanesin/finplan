@@ -1,0 +1,12 @@
+rules_version = '2';
+
+// Cole essas regras em: Console do Firebase > Firestore Database > Regras.
+// Cada usuário autenticado só lê/escreve os próprios dados (users/{uid}/...).
+// Como o app é monousuário, só a conta criada no primeiro login deve existir.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{uid}/{document=**} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+  }
+}
