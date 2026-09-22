@@ -1,0 +1,572 @@
+:root {
+  --bg: #10131a;
+  --card: #181c24;
+  --card-border: #262b36;
+  --text: #f2f1ec;
+  --text-dim: #9aa0ac;
+  --green: #3ecf8e;
+  --amber: #f5a623;
+  --red: #f0584b;
+  --blue: #5b8def;
+
+  --font-display: 'Fraunces', serif;
+  --font-body: 'IBM Plex Sans', sans-serif;
+
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input {
+  font-family: inherit;
+  color: inherit;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  margin: 0;
+}
+
+.app-shell {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 20px 8px;
+}
+
+.app-header h1 {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.month-picker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-dim);
+}
+
+.month-picker button {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  color: var(--text);
+  border-radius: 999px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.month-picker button:hover {
+  border-color: var(--blue);
+}
+
+.screen {
+  flex: 1;
+  padding: 12px 20px 100px;
+  overflow-y: auto;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 18px;
+  margin-bottom: 16px;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  background: var(--card);
+  border-top: 1px solid var(--card-border);
+  padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+  gap: 4px;
+}
+
+.bottom-nav button {
+  flex: 1;
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  padding: 8px 4px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.bottom-nav button.active {
+  color: var(--green);
+  background: rgba(62, 207, 142, 0.1);
+}
+
+/* ---------- Tela 1: Lançar ---------- */
+
+.valor-display {
+  font-family: var(--font-display);
+  font-size: 56px;
+  font-weight: 600;
+  text-align: center;
+  padding: 24px 0 8px;
+}
+
+.valor-input {
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 56px;
+  font-weight: 600;
+  text-align: center;
+  width: 100%;
+  outline: none;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.chip {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  color: var(--text);
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.chip.selected {
+  background: var(--green);
+  border-color: var(--green);
+  color: #0b1410;
+  font-weight: 600;
+}
+
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 4px;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.toggle-row:last-of-type {
+  border-bottom: none;
+}
+
+.toggle {
+  display: flex;
+  background: var(--bg);
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+  padding: 2px;
+}
+
+.toggle button {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.toggle button.active {
+  background: var(--blue);
+  color: #0b1120;
+}
+
+.switch {
+  width: 44px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--bg);
+  border: 1px solid var(--card-border);
+  position: relative;
+  cursor: pointer;
+}
+
+.switch .knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--text-dim);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.switch.on {
+  border-color: var(--amber);
+}
+
+.switch.on .knob {
+  transform: translateX(18px);
+  background: var(--amber);
+}
+
+.context-hint {
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 13px;
+  margin: 4px 0 20px;
+}
+
+.context-hint.warn {
+  color: var(--amber);
+}
+
+.context-hint.danger {
+  color: var(--red);
+}
+
+.btn-primary {
+  width: 100%;
+  background: var(--green);
+  color: #0b1410;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  width: 100%;
+  background: transparent;
+  color: var(--text-dim);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* ---------- Tela 2: Painel ---------- */
+
+.cascata-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 8px 0;
+  font-size: 14px;
+}
+
+.cascata-row .label {
+  color: var(--text-dim);
+}
+
+.cascata-row .value {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.cascata-row.total {
+  border-top: 1px solid var(--card-border);
+  margin-top: 6px;
+  padding-top: 12px;
+  font-size: 16px;
+}
+
+.cascata-row .value.negative {
+  color: var(--red);
+}
+
+.cascata-row .value.positive {
+  color: var(--green);
+}
+
+.envelope-item {
+  margin-bottom: 16px;
+}
+
+.envelope-item:last-child {
+  margin-bottom: 0;
+}
+
+.envelope-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.envelope-header .nome {
+  font-weight: 600;
+}
+
+.envelope-header .valores {
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.progress-track {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.2s ease;
+}
+
+.progress-fill.ok {
+  background: var(--green);
+}
+
+.progress-fill.warn {
+  background: var(--amber);
+}
+
+.progress-fill.over {
+  background: var(--red);
+}
+
+.envelope-sub {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+
+.cofre-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cofre-card .info h3 {
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+.cofre-card .valor {
+  font-family: var(--font-display);
+  font-size: 20px;
+}
+
+.cofre-card .meta {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.section-title {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  margin: 24px 0 10px;
+}
+
+/* ---------- Tela 3: Contas Fixas ---------- */
+
+.filter-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.filter-row button {
+  flex: 1;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  color: var(--text-dim);
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.filter-row button.active {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: #0b1120;
+}
+
+.conta-fixa-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--card-border);
+  gap: 12px;
+}
+
+.conta-fixa-item:last-child {
+  border-bottom: none;
+}
+
+.conta-fixa-item .info {
+  min-width: 0;
+}
+
+.conta-fixa-item .nome {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+.conta-fixa-item .venc {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+
+.conta-fixa-item .valor {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.badge.pago {
+  background: rgba(62, 207, 142, 0.15);
+  color: var(--green);
+}
+
+.badge.atrasado {
+  background: rgba(240, 88, 75, 0.15);
+  color: var(--red);
+}
+
+.badge.vence-em-breve {
+  background: rgba(245, 166, 35, 0.15);
+  color: var(--amber);
+}
+
+.badge.em-dia {
+  background: rgba(91, 141, 239, 0.15);
+  color: var(--blue);
+}
+
+.checkbox {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 1.5px solid var(--card-border);
+  background: var(--bg);
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkbox.checked {
+  background: var(--green);
+  border-color: var(--green);
+  color: #0b1410;
+}
+
+/* ---------- Auth ---------- */
+
+.auth-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  gap: 16px;
+}
+
+.auth-screen form {
+  width: 100%;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.auth-screen input {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  font-size: 14px;
+}
+
+.auth-error {
+  color: var(--red);
+  font-size: 13px;
+  text-align: center;
+}
+
+.muted {
+  color: var(--text-dim);
+  font-size: 13px;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  color: var(--text-dim);
+}
